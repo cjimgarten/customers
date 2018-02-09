@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <title>Customer Entry</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous" />
+
+</head>
+<body>
+    <nav th:fragment="navigation" class="container">
+        <a href="/home">Home</a>
+        <a href="/customer-entry">Customer Entry</a>
+        <a href="/view-customers">View Customers</a>
+    </nav>
+    <div th:fragment="heading" class="container">
+        <h1 th:text="${title}">Heading</h1>
+    </div>
+</body>
+</html>

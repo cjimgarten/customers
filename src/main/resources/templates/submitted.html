@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+</head>
+<body>
+    <nav th:replace="fragments :: navigation">
+    </nav>
+    <div th:replace="fragments :: heading">
+    </div>
+
+    <div class="container">
+
+        <!-- COMMENT -->
+
+        <p>The customer has been submitted!</p>
+        <form method="get" action="/customer-entry">
+            <button>Go Back</button>
+        </form>
+    </div>
+
+</body>
+</html>
