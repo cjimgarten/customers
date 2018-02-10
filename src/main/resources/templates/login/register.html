@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+</head>
+<body>
+    <nav th:replace="fragments :: login-navigation">
+    </nav>
+    <div th:replace="fragments :: heading">
+    </div>
+
+    <div class="container">
+
+        <!-- User registration form -->
+
+        <div class="register-box">
+            <div class="form">
+                <form method="get" action="/app-ctrl">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username"/>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password"/>
+
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" name="confirm-password" id="confirm-password"/>
+
+                    <button name="register-button" type="submit" class="button">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

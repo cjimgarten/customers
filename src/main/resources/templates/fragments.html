@@ -9,12 +9,18 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous" />
 
+    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+
 </head>
 <body>
-    <nav th:fragment="navigation" class="container">
-        <a href="/home">Home</a>
-        <a href="/customer-entry">Customer Entry</a>
-        <a href="/view-customers">View Customers</a>
+    <nav th:fragment="login-navigation" class="container">
+        <a href="/login-ctrl/login">Login</a>
+        <a href="/login-ctrl/register">Register</a>
+    </nav>
+    <nav th:fragment="app-navigation" class="container">
+        <a href="/app-ctrl/index">Home</a>
+        <a href="/app-ctrl/customer-entry">Customer Entry</a>
+        <a href="/app-ctrl/view-customers">View Customers</a>
     </nav>
     <div th:fragment="heading" class="container">
         <h1 th:text="${title}">Heading</h1>

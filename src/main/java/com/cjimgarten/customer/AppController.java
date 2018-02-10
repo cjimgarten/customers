@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by chris on 1/15/18.
  */
 @Controller
-@RequestMapping(value = "")
+@RequestMapping(value = "app-ctrl")
 public class AppController {
 
     private static final Logger LOGGER = LogManager.getLogger(AppController.class);
@@ -25,21 +25,21 @@ public class AppController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String redirectToHomePage() {
         LOGGER.info("Redirecting to home page");
-        return "redirect:/home";
+        return "redirect:/app-ctrl/index";
     }
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
+    @RequestMapping(value = "index", method = RequestMethod.GET)
     public String getHomePage(Model model) {
         LOGGER.info("GET home page");
         model.addAttribute("title", "Home Page");
-        return "index";
+        return "/app/index";
     }
 
     @RequestMapping(value = "customer-entry", method = RequestMethod.GET)
     public String getCustomerEntryForm(Model model) {
         LOGGER.info("GET customer entry form");
         model.addAttribute("title", "Customer Entry");
-        return "customer-entry";
+        return "/app/customer-entry";
     }
 
     @RequestMapping(value = "customer-entry", method = RequestMethod.POST)
@@ -62,7 +62,7 @@ public class AppController {
         LOGGER.info("Post-save -- {}", c);
 
         model.addAttribute("title", "Submitted");
-        return "submitted";
+        return "/app/submitted";
     }
 
     @RequestMapping(value = "view-customers", method = RequestMethod.GET)
@@ -76,6 +76,6 @@ public class AppController {
 
         model.addAttribute("title", "View Customers");
         model.addAttribute("customers", customerIterable);
-        return "view-customers";
+        return "/app/view-customers";
     }
 }
