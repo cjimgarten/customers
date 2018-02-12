@@ -1,4 +1,4 @@
-package com.cjimgarten.customer;
+package com.cjimgarten.customer.model;
 
 import org.springframework.data.repository.CrudRepository;
 

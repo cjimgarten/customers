@@ -1,5 +1,7 @@
-package com.cjimgarten.customer;
+package com.cjimgarten.customer.controller;
 
+import com.cjimgarten.customer.model.Customer;
+import com.cjimgarten.customer.model.CustomerRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

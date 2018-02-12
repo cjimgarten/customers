@@ -1,4 +1,4 @@
-package com.cjimgarten.customer;
+package com.cjimgarten.customer.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
