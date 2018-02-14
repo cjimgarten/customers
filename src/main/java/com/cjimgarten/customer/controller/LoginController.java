@@ -2,14 +2,17 @@ package com.cjimgarten.customer.controller;
 
 import com.cjimgarten.customer.model.User;
 import com.cjimgarten.customer.model.UserRepository;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 /**
  * LoginController.java
@@ -31,26 +34,27 @@ public class LoginController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String getLoginPage(Model model) {
+    public String getLoginPage(User user, Model model) {
         LOGGER.info("GET login page");
         model.addAttribute("title", "Login");
         return "/login/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLoginForm(HttpServletRequest req, Model model) {
+    public String processLoginForm(@Valid User user,
+                                   BindingResult bindingResult,
+                                   Model model) {
         LOGGER.info("Processing login form POST");
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        if (bindingResult.hasErrors()) {
+            LOGGER.info("User object has {} error(s) -- login failed", bindingResult.getErrorCount());
+            model.addAttribute("title", "Login");
+            return "/login/login";
+        }
 
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(password);
-
-        LOGGER.info("Username: {}", username);
-        LOGGER.debug("Password: {}", password);
-        LOGGER.debug("{}", u);
+        LOGGER.info("Username: {}", user.getUsername());
+        LOGGER.debug("Password: {}", user.getPassword());
+        LOGGER.debug("{}", user);
 
         // TODO log the user in
 
@@ -59,28 +63,27 @@ public class LoginController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String getRegisterPage(Model model) {
+    public String getRegisterPage(User user, Model model) {
         LOGGER.info("GET register page");
         model.addAttribute("title", "Register");
         return "/login/register";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String processRegisterForm(HttpServletRequest req, Model model) {
+    public String processRegisterForm(@Valid User user,
+                                      Errors errors,
+                                      Model model) {
         LOGGER.info("Processing register form POST");
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirm-password");
+        if (errors.hasErrors()) {
+            LOGGER.info("User object has {} error(s) -- registration failed", errors.getErrorCount());
+            model.addAttribute("title", "Register");
+            return "/login/register";
+        }
 
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(password);
-
-        LOGGER.info("Username: {}", username);
-        LOGGER.debug("Password: {}", password);
-        LOGGER.debug("Confirm Password: {}", confirmPassword);
-        LOGGER.debug("{}", u);
+        LOGGER.info("Username: {}", user.getUsername());
+        LOGGER.debug("Password: {}", user.getPassword());
+        LOGGER.debug("{}", user);
 
         // TODO register new user
 

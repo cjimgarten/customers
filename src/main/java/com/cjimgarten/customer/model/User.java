@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 /**
  * User.java
@@ -15,7 +16,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Size(min = 2, max = 10, message = "Must be between 2 and 10 char")
     private String username;
+
+    @Size(min = 2, max = 10, message = "Must be between 2 and 10 char")
     private String password;
 
     public User() {}
