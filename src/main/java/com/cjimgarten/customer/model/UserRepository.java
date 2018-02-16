@@ -9,6 +9,4 @@ import org.springframework.data.repository.CrudRepository;
  * UserRepository.java
  * Created by chris on 2/12/18.
  */
-public interface UserRepository extends CrudRepository<User, Long>{
-
-}
+public interface UserRepository extends CrudRepository<User, Long> {}

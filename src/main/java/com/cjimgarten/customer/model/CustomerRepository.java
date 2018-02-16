@@ -9,6 +9,4 @@ import org.springframework.data.repository.CrudRepository;
  * CustomerRepository.java
  * Created by chris on 1/23/18.
  */
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
-
-}
+public interface CustomerRepository extends CrudRepository<Customer, Long> {}
