@@ -2,14 +2,16 @@ package com.cjimgarten.customer.controller;
 
 import com.cjimgarten.customer.model.Customer;
 import com.cjimgarten.customer.model.CustomerRepository;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 /**
  * AppController.java
@@ -38,30 +40,27 @@ public class AppController {
     }
 
     @RequestMapping(value = "customer-entry", method = RequestMethod.GET)
-    public String getCustomerEntryForm(Model model) {
+    public String getCustomerEntryForm(Customer customer, Model model) {
         LOGGER.info("GET customer entry form");
         model.addAttribute("title", "Customer Entry");
         return "/app/customer-entry";
     }
 
     @RequestMapping(value = "customer-entry", method = RequestMethod.POST)
-    public String processCustomerEntryPost(HttpServletRequest req, Model model) {
+    public String processCustomerEntryPost(@Valid Customer customer,
+                                           Errors errors,
+                                           Model model) {
         LOGGER.info("Processing customer entry POST");
 
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String dob = req.getParameter("dob");
-        String email = req.getParameter("email");
+        if (errors.hasErrors()) {
+            LOGGER.info("Customer object has {} error(s) -- customer entry failed", errors.getErrorCount());
+            model.addAttribute("title", "Customer Entry");
+            return "/app/customer-entry";
+        }
 
-        Customer c = new Customer();
-        c.setFirstName(firstName);
-        c.setLastName(lastName);
-        c.setDob(dob);
-        c.setEmail(email);
-
-        LOGGER.info("Pre-save -- {}", c);
-        customerRepository.save(c);
-        LOGGER.info("Post-save -- {}", c);
+        LOGGER.info("Pre-save -- {}", customer);
+        customerRepository.save(customer);
+        LOGGER.info("Post-save -- {}", customer);
 
         model.addAttribute("title", "Submitted");
         return "/app/submitted";

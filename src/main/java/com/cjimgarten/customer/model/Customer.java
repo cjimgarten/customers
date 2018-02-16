@@ -1,9 +1,12 @@
 package com.cjimgarten.customer.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 /**
  * Customer.java
@@ -15,9 +18,16 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Size(min = 2, max = 15, message = "Must be between 2 and 15 char")
     private String firstName;
+
+    @Size(min = 2, max = 15, message = "Must be between 2 and 15 char")
     private String lastName;
+
     private String dob;
+
+    @NotEmpty(message = "Must provide an email")
     private String email;
 
     public Customer() {}
