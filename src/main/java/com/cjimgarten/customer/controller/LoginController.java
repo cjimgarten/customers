@@ -59,6 +59,8 @@ public class LoginController {
         LOGGER.debug("{}", user);
 
         // TODO log the user in
+            // TODO check if user exists
+            // TODO validate password
 
         LOGGER.info("Login successful -- Redirecting to app-ctrl");
         return "redirect:/app-ctrl";
@@ -91,7 +93,7 @@ public class LoginController {
         LOGGER.debug("Confirm Password: {}", confirmPassword);
         LOGGER.debug("{}", user);
 
-        if( !(confirmPassword.equals(user.getPassword())) ) {
+        if ( !(confirmPassword.equals(user.getPassword())) ) {
             String confirmPasswordError = "Password does not match confirmation";
             LOGGER.info("Registration failed -- {}", confirmPasswordError);
             model.addAttribute("title", "Register");
@@ -99,7 +101,23 @@ public class LoginController {
             return "/login/register";
         }
 
-        // TODO register new user
+        // ensure username does not exist
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(user.getUsername())) {
+                String usernameExistsError = "Username already exists";
+                LOGGER.info("Registration failed -- {}", usernameExistsError);
+                model.addAttribute("title", "Register");
+                model.addAttribute("usernameExistsError", usernameExistsError);
+                return "/login/register";
+            }
+        }
+
+        // TODO hash password
+
+        // save new user
+        LOGGER.info("Pre-save -- {}: ", user);
+        userRepository.save(user);
+        LOGGER.info("Post-save -- {}: ", user);
 
         LOGGER.info("Registration successful -- Redirecting to app-ctrl");
         return "redirect:/app-ctrl";
