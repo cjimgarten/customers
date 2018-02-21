@@ -58,12 +58,25 @@ public class LoginController {
         LOGGER.debug("Password: {}", user.getPassword());
         LOGGER.debug("{}", user);
 
-        // TODO log the user in
-            // TODO check if user exists
-            // TODO validate password
+        // TODO hash password
 
-        LOGGER.info("Login successful -- Redirecting to app-ctrl");
-        return "redirect:/app-ctrl";
+        // validate username and password combination
+        for (User u : userRepository.findAll()) {
+            if ( u.getUsername().equals(user.getUsername()) &&
+                    u.getPassword().equals(user.getPassword()) ) {
+
+                // successful validation
+                LOGGER.info("Login successful -- Redirecting to app-ctrl");
+                return "redirect:/app-ctrl";
+            }
+        }
+
+        // failed validation
+        String usernamePasswordError = "Invalid username or password";
+        LOGGER.info("Registration failed -- {}", usernamePasswordError);
+        model.addAttribute("title", "Login");
+        model.addAttribute("usernamePasswordError", usernamePasswordError);
+        return "/login/login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
